@@ -20,5 +20,11 @@ RUN /opt/venv/bin/python -m pip install --upgrade pip
 # Install project dependencies from requirements.txt
 RUN /opt/venv/bin/python -m pip install -r requirements.txt
 
-# Run a simple HTTP server to expose copied files
-CMD ["/opt/venv/bin/python", "-m", "http.server", "8080"]
+# copy our local conf/entrypoint.sh to /app in the container
+COPY ./conf/entrypoint.sh /app/entrypoint.sh
+...
+# Make our entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+...
+# Execute our entrypoint script
+CMD ["./entrypoint.sh"]

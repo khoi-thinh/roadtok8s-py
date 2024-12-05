@@ -22,9 +22,9 @@ RUN /opt/venv/bin/python -m pip install -r requirements.txt
 
 # copy our local conf/entrypoint.sh to /app in the container
 COPY ./conf/entrypoint.sh /app/entrypoint.sh
-...
+
 # Make our entrypoint script executable
 RUN chmod +x /app/entrypoint.sh
-...
+
 # Execute our entrypoint script
 CMD ["./entrypoint.sh"]

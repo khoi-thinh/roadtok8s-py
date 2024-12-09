@@ -11,6 +11,9 @@ COPY ./src/ /app
 RUN apt-get update && \
     apt-get install -y python3-venv python3-dev python3-pip
 
+# Install redis-tools
+RUN apt-get install -y redis-tools
+    
 # Create the Python virtual environment
 RUN python3 -m venv /opt/venv
 

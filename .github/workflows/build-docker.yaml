@@ -64,7 +64,7 @@ jobs:
           echo "API_ENDPOINT=${{ secrets.API_ENDPOINT }}" >> .env
       - name: Ensure remote directory exists
         run: |
-          ssh $SSH_OPTS $REMOTE mkdir -p $REMOTE_APP_DIR
+          ssh $SSH_OPTS $REMOTE sudo mkdir -p $REMOTE_APP_DIR
       - name: Copy GitHub Actions .env file to Remote VM
         run: |
           scp $SSH_OPTS .env $REMOTE:$REMOTE_APP_DIR/.env    

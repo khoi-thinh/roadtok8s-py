@@ -3,9 +3,12 @@ services:
     image: nginx
 
   web:
+    image: thinhduckhoi/rk8s-py:${TAG:-latest}
     build:
       context: .
       dockerfile: Dockerfile
+      tags:
+        - "thinhduckhoi/rk8s-py:${TAG:-latest}"
     ports:
       - "8080:8080"
     environment:

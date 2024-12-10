@@ -10,7 +10,7 @@ jobs:
       DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
       REPO: ${{ secrets.DOCKERHUB_REPO }}
       SSH_OPTS: '-o StrictHostKeyChecking=no'
-      REMOTE: "ubuntu@${{ secrets.AKAMAI_INSTANCE_IP_ADDRESS }}"
+      REMOTE: "ubuntu@${{ secrets.EC2_INSTANCE_IP_ADDRESS }}"
       REMOTE_APP_DIR: '/opt/app'
 
     steps:

@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy our local src folder to /app in the container
 COPY ./src/ /app
+COPY ./templates/ /app/templates
 
 # Run OS-level updates and install necessary dependencies
 RUN apt-get update && \

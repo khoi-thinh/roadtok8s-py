@@ -46,9 +46,10 @@ jobs:
 
       - name: Replace image tag in deployment.yaml
         run: |
-          sed -i "s|thinhduckhoi/rk8s-py:.*|thinhduckhoi/rk8s-py:$IMAGE_TAG|g" apps/2-deployment.yaml
+          cd apps
+          sed -i "s|thinhduckhoi/rk8s-py:.*|thinhduckhoi/rk8s-py:$IMAGE_TAG|g" 2-deployment.yaml
           cat apps/2-deployment.yaml
-          
+
       - uses: azure/setup-kubectl@v3
 
       - name: Create/Verify .kube directory

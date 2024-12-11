@@ -13,8 +13,7 @@ spec:
         app: py-app
     spec:
       containers:
-        - name: rk8s-py
-          #image: thinhduckhoi/rk8s-py:${{ github.sha }} 
+        - name: rk8s-py 
           image: thinhduckhoi/rk8s-py:${{IMAGE_TAG}}
           ports:
             - name: http-port

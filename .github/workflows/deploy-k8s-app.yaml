@@ -62,24 +62,12 @@ jobs:
         run: |
           kubectl get deployments
 
-      - name: Check if Deployment Exists
-        id: check_deployment
+      - name: Apply changes
         run: |
-          kubectl get deployment py-app -n default || echo "NOT_FOUND"
-
-      - name: Create Deployment (If Not Found)
-        if: steps.check_deployment.outputs.result == 'NOT_FOUND'
-        run: |
-          kubectl create deployment py-app \
-          --image=$DH_USER/$REPO:${{ github.sha }} -n default
-
-      - name: Update Deployment with New Image
-        if: steps.check_deployment.outputs.result != 'NOT_FOUND'
-        run: |
-          kubectl set image deployment/py-app rk8s-py=$DH_USER/$REPO:${{ github.sha }} -n default
+          kubectl apply -f apps/
 
       - name: Rollout Apps
-        if: steps.check_deployment.outputs.result != 'NOT_FOUND'
         run: |
           kubectl rollout restart deployment -n default py-app
+
 

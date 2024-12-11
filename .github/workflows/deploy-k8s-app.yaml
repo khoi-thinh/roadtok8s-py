@@ -47,7 +47,7 @@ jobs:
       - name: Replace image tag in deployment.yaml
         run: |
           cd apps
-          sed -i "s|thinhduckhoi/rk8s-py:.*|thinhduckhoi/rk8s-py:$IMAGE_TAG|g" 2-deployment.yaml
+          sed -i.bak "s/IMAGE_TAG/$IMAGE_TAG/g" 2-deployment.yaml
           cat 2-deployment.yaml
 
       - uses: azure/setup-kubectl@v3

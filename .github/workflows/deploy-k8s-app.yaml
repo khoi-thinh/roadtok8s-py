@@ -43,6 +43,9 @@ jobs:
         run: |
           sed -i "s|${{ github.sha }}|${{ github.sha }}|g" apps/2-deployment.yaml
 
+      - name: Check the deployment YAML content
+        run: |
+          cat apps/2-deployment.yaml
 
       - uses: azure/setup-kubectl@v3
 

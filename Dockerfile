@@ -5,7 +5,7 @@ FROM python:3.11.4
 WORKDIR /app
 
 # Copy our local src folder to /app in the container
-COPY ./src/ /app
+COPY ./src/ /app/src
 COPY ./templates/ /app/templates
 
 # Run OS-level updates and install necessary dependencies

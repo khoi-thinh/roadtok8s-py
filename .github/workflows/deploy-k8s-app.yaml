@@ -41,7 +41,8 @@ jobs:
 
       - name: Replace image tag in deployment YAML
         run: |
-          sed -i "s|\${{ github.sha }}|${{ github.sha }}|g" apps/2-deployment.yaml
+          sed -i "s|${{ github.sha }}|${{ github.sha }}|g" apps/2-deployment.yaml
+
 
       - uses: azure/setup-kubectl@v3
 

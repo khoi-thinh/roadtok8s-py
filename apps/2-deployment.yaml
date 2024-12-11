@@ -15,7 +15,7 @@ spec:
       containers:
         - name: rk8s-py
           #image: thinhduckhoi/rk8s-py:${{ github.sha }} 
-          image: thinhduckhoi/rk8s-py:latest
+          image: thinhduckhoi/rk8s-py:${{IMAGE_TAG}}
           ports:
             - name: http-port
               containerPort: 8080

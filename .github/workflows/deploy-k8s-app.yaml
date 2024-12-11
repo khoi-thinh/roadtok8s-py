@@ -39,6 +39,15 @@ jobs:
         run: |
           docker push "$DH_USER/$REPO" --all-tags
 
+      - name: Set image tag 
+        run: |
+          IMAGE_TAG=${{ github.sha }} 
+          export IMAGE_TAG
+
+      - name: Replace image tag in deployment.yaml
+        run: |
+          envsubst < apps/2-deployment.yaml > apps/2-deployment-updated.yaml
+
       - uses: azure/setup-kubectl@v3
 
       - name: Create/Verify .kube directory

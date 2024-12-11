@@ -10,4 +10,4 @@ def read_index():
 
 @app.get("/api/v1/hello-world/")
 def read_hello_world():
-    return {"Hello": "World"}
+    return {"Hello": "World!"}

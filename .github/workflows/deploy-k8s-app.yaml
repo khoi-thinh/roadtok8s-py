@@ -39,18 +39,10 @@ jobs:
         run: |
           docker push "$DH_USER/$REPO" --all-tags
 
-      - name: Set GitHub SHA to environment variable
-        run: echo "SHA=${{ github.sha }}" >> $GITHUB_ENV
-
       - name: Replace image tag in deployment YAML
         run: |
-          echo "Before replacement:"
-          cat apps/2-deployment.yaml
-          sed -i "s|\${{ github.sha }}|$SHA|g" apps/2-deployment.yaml
-          echo "After replacement:"
-          cat apps/2-deployment.yaml
-
-
+          export SHA="${{ github.sha }}"
+          envsubst < apps/2-deployment.yaml
 
       - uses: azure/setup-kubectl@v3
 

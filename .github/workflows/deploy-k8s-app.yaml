@@ -39,11 +39,6 @@ jobs:
         run: |
           docker push "$DH_USER/$REPO" --all-tags
 
-      - name: Replace image tag in deployment YAML
-        run: |
-          export SHA="${{ github.sha }}"
-          envsubst < apps/2-deployment.yaml
-
       - uses: azure/setup-kubectl@v3
 
       - name: Create/Verify .kube directory
@@ -54,10 +49,6 @@ jobs:
           cat << EOF >> ~/.kube/config
           ${{ secrets.KUBECONFIG_SA }}
           EOF
-
-      - name: Echo nodes
-        run: |
-          kubectl get nodes
 
       - name: Echo pods
         run: |

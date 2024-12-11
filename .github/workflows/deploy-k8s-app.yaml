@@ -42,6 +42,7 @@ jobs:
       - name: Set image tag in deployment
         run: |
           IMAGE_TAG=${{ github.sha }} && \
+          chmod +w apps/2-deployment.yaml && \
           sed -i.bak "s|IMAGE_TAG|${IMAGE_TAG}|g" apps/2-deployment.yaml && \
           apps/2-deployment.yaml
 

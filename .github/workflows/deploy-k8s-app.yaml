@@ -39,15 +39,11 @@ jobs:
         run: |
           docker push "$DH_USER/$REPO" --all-tags
 
-      - name: Set image tag 
+      - name: Set image tag in deployment
         run: |
-          IMAGE_TAG=${{ github.sha }} 
-          echo "IMAGE_TAG=$IMAGE_TAG"
-
-      - name: Replace image tag in deployment.yaml
-        run: |
-          sed -i "s|image: thinhduckhoi/rk8s-py:.*|image: thinhduckhoi/rk8s-py:$IMAGE_TAG|g" apps/2-deployment.yaml
-          cat apps/2-deployment.yaml
+          IMAGE_TAG=${{ github.sha }} && \
+          sed -i.bak "s|IMAGE_TAG|${IMAGE_TAG}|g" apps/2-deployment && \
+          apps/2-deployment
 
       - uses: azure/setup-kubectl@v3
 

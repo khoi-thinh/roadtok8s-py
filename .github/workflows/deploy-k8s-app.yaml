@@ -39,6 +39,10 @@ jobs:
         run: |
           docker push "$DH_USER/$REPO" --all-tags
 
+      - name: Replace image tag in deployment YAML
+        run: |
+          sed -i "s|\${{ github.sha }}|${{ github.sha }}|g" apps/2-deployment.yaml
+
       - uses: azure/setup-kubectl@v3
 
       - name: Create/Verify .kube directory

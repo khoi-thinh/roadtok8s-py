@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: py-app
+  template:
+    metadata:
+      labels:
+        app: py-app
+    spec:
+      containers:
+        - name: rk8s-py
+          image: thinhduckhoi/rk8s-py:${{ github.sha }} 
+          ports:
+            - name: http-port
+              containerPort: 8080
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: rk8s-apps
+                  key: PY_PORT
+          envFrom:
+            - configMapRef:
+                name: rk8s-apps

@@ -1,0 +1,64 @@
+name: Update K8s App Deployments
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+      REPO: ${{ secrets.DOCKERHUB_REPO }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build the Docker image
+        run: |
+          docker build -f Dockerfile \
+          -t "$DH_USER/$REPO:latest" \
+          -t "$DH_USER/$REPO:${{ github.sha }}" \
+          .
+
+      - name: Push the Docker image to Docker Hub
+        run: |
+          docker push "$DH_USER/$REPO" --all-tags
+
+      - uses: azure/setup-kubectl@v3
+
+      - name: Create/Verify .kube directory
+        run: mkdir -p ~/.kube/
+
+      - name: Create kubectl config
+        run: |
+          cat << EOF >> ~/.kube/config
+          ${{ secrets.KUBECONFIG_SA }}
+          EOF
+
+      - name: Echo nodes
+        run: |
+          kubectl get nodes
+
+      - name: Echo pods
+        run: |
+          kubectl get pods
+
+      - name: Echo deployments
+        run: |
+          kubectl get deployments
+
+      - name: Update Deployment with New Image
+        run: |
+          kubectl set image deployment/py-app rk8s-py=$DH_USER/$REPO:${{ github.sha }} -n default
+
+      - name: Rollout Apps
+        run: |
+          kubectl rollout restart deployment -n default py-app
